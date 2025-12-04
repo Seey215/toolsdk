@@ -18,17 +18,14 @@ const senderEmail = "noreply@a.com";
 const recipientEmail = "kelvin@b.com";
 
 // Get Tools
-const searchMCP = await toolSDK.package('@toolsdk.ai/tavily-mcp', {
-  TAVILY_API_KEY: process.env.TAVILY_API_KEY,
-});
-const emailMCP  = await toolSDK.package('@toolsdk.ai/mcp-send-email', {
-  RESEND_API_KEY: process.env.RESEND_API_KEY,
-});
+const searchMCP  = await toolSDK.package('@toolsdk.ai/tavily-mcp', { TAVILY_API_KEY: process.env.TAVILY_API_KEY });
+const emailMCP   = await toolSDK.package('@toolsdk.ai/mcp-send-email', { RESEND_API_KEY: process.env.RESEND_API_KEY });
 const searchTool = await searchMCP.getAISDKTool('tavily-search');
 const emailTool  = await emailMCP.getAISDKTool('send-email');
 
 // Generate Result with Tools
 const completion = await generateText({
+  maxSteps: 5,
   model: openai('gpt-4.1'),
   messages: [{
     role: 'user',
